@@ -1,0 +1,30 @@
+/* Mochi – schlichte Seiten für Datenschutz, Support und Impressum */
+:root {
+  --bg: #FFF8F1;
+  --card: #FFFFFF;
+  --text: #3B3340;
+  --muted: #8A7F8E;
+  --accent: #F4A6B7;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #1E1B22; --card: #2A2630; --text: #F3EDF5; --muted: #A79FAD; --accent: #F4A6B7; }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 17px/1.55 ui-rounded, -apple-system, "SF Pro Rounded", system-ui, sans-serif;
+}
+main { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
+header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+header svg { width: 56px; height: 56px; flex: none; }
+h1 { font-size: 32px; margin: 0; }
+h2 { font-size: 21px; margin: 32px 0 8px; }
+h3 { font-size: 17px; margin: 20px 0 4px; }
+section { background: var(--card); border-radius: 20px; padding: 4px 22px 18px; margin: 16px 0; }
+a { color: inherit; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+.muted { color: var(--muted); font-size: 15px; }
+nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 0; }
+nav a { background: var(--card); padding: 8px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+td, th { text-align: left; vertical-align: top; padding: 6px 8px 6px 0; border-bottom: 1px solid rgba(128,128,128,.2); }
+footer { margin-top: 40px; font-size: 14px; color: var(--muted); }
