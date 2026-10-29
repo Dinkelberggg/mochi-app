@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mochi – Einladung</title>
+<meta property="og:title" content="Werde mein Mochi-Freund! 👻">
+<meta property="og:description" content="Tipp hier, um die Einladung in Mochi anzunehmen.">
+<link rel="stylesheet" href="style.css">
+<style>
+  .center { text-align: center; }
+  .code { font: 800 40px/1.2 ui-rounded, -apple-system, system-ui, sans-serif; letter-spacing: 2px; margin: 8px 0 4px; }
+  .button { display: block; background: var(--accent); color: #1F1B2B; text-decoration: none; font-weight: 700;
+            font-size: 19px; padding: 16px; border-radius: 999px; margin: 18px 0 10px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main class="center">
+  <img src="ghost.svg" width="96" height="96" alt="">
+  <h1 id="title">Werde mein Mochi-Freund!</h1>
+
+  <section id="valid">
+    <p id="intro">Du wurdest zu Mochi eingeladen. Tipp auf den Knopf – Mochi öffnet sich und fragt, ob du die Einladung annehmen möchtest.</p>
+    <a id="open" class="button" href="#">In Mochi öffnen</a>
+    <p class="muted" id="codehint">Klappt das nicht? Öffne Mochi und gib unter „Freunde › Code eingeben“ diesen Code ein:</p>
+    <div class="code" id="code"></div>
+    <p class="muted" id="expiry">Der Code gilt 2 Tage.</p>
+    <p class="muted hidden" id="store">Noch kein Mochi? <a id="storelink" href="#">Hier gibt es Mochi im App Store.</a></p>
+  </section>
+
+  <section id="invalid" class="hidden">
+    <p id="invalidtext">Diese Einladung ist unvollständig. Bitte lass dir den Link oder Code noch einmal schicken.</p>
+  </section>
+
+  <footer>
+    <nav style="justify-content:center"><a href="index.html">Mochi</a><a href="datenschutz.html">Datenschutz</a><a href="privacy.html">Privacy</a></nav>
+  </footer>
+</main>
+<script>
+  // Link-Aufbau: einladung.html?c=ABC123 – nur die Zeichen, die Mochi für Codes benutzt
+  const APP_STORE_URL = ""; // nach dem Release eintragen, z. B. https://apps.apple.com/app/id1234567890
+  const code = (new URLSearchParams(location.search).get("c") || "").toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g, "");
+  const english = !(navigator.language || "de").toLowerCase().startsWith("de");
+  const text = english ? {
+    title: "Be my Mochi friend!",
+    intro: "You've been invited to Mochi. Tap the button – Mochi opens and asks whether you'd like to accept the invite.",
+    open: "Open in Mochi",
+    codehint: "Doesn't work? Open Mochi and enter this code under “Friends › Enter code”:",
+    expiry: "The code is valid for 2 days.",
+    store: "No Mochi yet? ", storelink: "Get Mochi on the App Store.",
+    invalid: "This invite is incomplete. Please ask for the link or code again."
+  } : null;
+  if (text) {
+    document.documentElement.lang = "en";
+    document.title = "Mochi – Invite";
+    for (const id of ["title", "intro", "open", "codehint", "expiry"]) document.getElementById(id).textContent = text[id];
+    document.getElementById("invalidtext").textContent = text.invalid;
+    document.getElementById("store").firstChild.textContent = text.store;
+    document.getElementById("storelink").textContent = text.storelink;
+  }
+  if (code.length === 6) {
+    document.getElementById("code").textContent = code.slice(0, 3) + "-" + code.slice(3);
+    document.getElementById("open").href = "mochi://freunde/code/" + code;
+    if (APP_STORE_URL) {
+      document.getElementById("storelink").href = APP_STORE_URL;
+      document.getElementById("store").classList.remove("hidden");
+    }
+  } else {
+    document.getElementById("valid").classList.add("hidden");
+    document.getElementById("invalid").classList.remove("hidden");
+  }
+</script>
+</body>
+</html>
